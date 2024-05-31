@@ -63,13 +63,21 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip     
         
-      - name: 'Deploy to Azure Functions'
-        uses: Azure/functions-action@v1
-        id: deploy-to-function
+      # - name: 'Deploy to Azure Functions'
+      #   uses: Azure/functions-action@v1
+      #   id: deploy-to-function
+      #   with:
+      #     app-name: 'ChuckNorrisJokes'
+      #     slot-name: 'Production'
+      #     package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+      #     scm-do-build-during-deployment: true
+      #     enable-oryx-build: true
+      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7F95EA2ACE354EADB5219E10461D7E66 }}
+      - name: "Deploy to Azure Web App"
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'ChuckNorrisJokes'
-          slot-name: 'Production'
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          scm-do-build-during-deployment: true
-          enable-oryx-build: true
+          slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7F95EA2ACE354EADB5219E10461D7E66 }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
