@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "71644910-9ab5-46f6-a69c-e03e27a23f8b",
+		"name": "chuck_norris_jokes_pm_collection",
+		"description": "Collection with 2 tests and a visualisation for the Chuck Norris joke API at [https://cnj-fns.azurewebsites.net/api/httptrigger1](https://cnj-fns.azurewebsites.net/api/httptrigger1)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36000313"
+	},
+	"item": [
+		{
+			"name": "main",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {\r",
+							"    pm.response.to.be.ok;\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains 'joke' and 'gif_url'\", function() {\r",
+							"    let jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData.joke).to.exist;\r",
+							"    pm.expect(jsonData.gif_url).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const template = `\r",
+							"<html>\r",
+							"    <head>\r",
+							"        <title>Chuck Norris Joke</title>\r",
+							"        <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css\" />\r",
+							"    </head>\r",
+							"    <body style=\"margin: auto; max-width: 500px;\">\r",
+							"        <h1>Chuck Norris Joke</h1>\r",
+							"        <p>{{joke}}</p>\r",
+							"        <p>Source: <a href=\"https://api.chucknorris.io/jokes/random\">https://api.chucknorris.io/jokes/random</a></p>\r",
+							"        <img src={{gif_url}} alt=\"{{search_nouns}}\" width=\"500\" height=\"600\">\r",
+							"    </body>\r",
+							"</html>\r",
+							"`;\r",
+							"\r",
+							"pm.visualizer.set(template, pm.response.json())"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://cnj-fns.azurewebsites.net/api/httptrigger1",
+					"protocol": "https",
+					"host": [
+						"cnj-fns",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"httptrigger1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -37,19 +37,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     response = json.loads(res.text)
     gif_url = response['data'][0]['images']['original']['url']
 
-    html = """
-    <html>
-        <head>
-            <title>Chuck Norris Joke</title>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
-        </head>
-        <body style="margin: 100px auto; max-width: 500px;">
-            <h1>Chuck Norris Joke</h1>
-            <p>{joke}</p>
-            <p>Source: <a href="https://api.chucknorris.io/jokes/random">https://api.chucknorris.io/jokes/random</a></p>
-            <img src={gif_url} alt="{nouns}" width="500" height="600">
-        </body>
-    </html>
-    """.format(joke=joke, gif_url=gif_url, nouns=" ".join(filtered_nouns))
+    response_json = {
+        "joke": joke,
+        "gif_url": gif_url,
+        "search_nouns": " ".join(filtered_nouns)
+    }
 
-    return func.HttpResponse(html, mimetype='text/html')
+    return func.HttpResponse(json.dumps(response_json), mimetype='application/json')
